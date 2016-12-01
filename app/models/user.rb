@@ -21,10 +21,14 @@
 #
 
 class User < ApplicationRecord
+  include Redis::Objects
+  store_accessor :data, :github_account, :github_id, :github_token, :github_avatar
   belongs_to :spy_game_role
   has_many :game_room, dependent: :destroy
   # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
+  # :confirmable, :lockable, :timeoutable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
+
+  omniauthable
 end
