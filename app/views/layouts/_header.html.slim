@@ -1,0 +1,6 @@
+- if user_signed_in?
+  ul.nav.navbar-nav.navbar-right
+        li= link_to "Logout", destroy_user_session_path, method: :delete, class: "glyphicon glyphicon-off"
+- else
+  ul.nav.navbar-nav.nvabar-right
+    li= link_to "Facebook login", auth_facebook_path
