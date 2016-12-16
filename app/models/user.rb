@@ -22,7 +22,7 @@
 
 class User < ApplicationRecord
   include Redis::Objects
-  store_accessor :data, :github_account, :github_id, :github_token, :github_avatar
+  store_accessor :data, :facebook_account, :facebook_id, :facebook_token, :facebook_avatar
   belongs_to :spy_game_role
   has_many :game_room, dependent: :destroy
   # Include default devise modules. Others available are:
@@ -31,4 +31,16 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   omniauthable
+
+  def self.get_fb_data(access_token)
+    require_data = 'email,name'
+    res = HTTParty.get "https://graph.facebook.com/v2.4/me",  { params: { access_token: access_token }, fields: require_data }
+
+    if res.code == 200
+      JSON.parse( res.to_str )
+    else
+      Rails.logger.warn(res.body)
+      nil
+    end
+  end
 end
