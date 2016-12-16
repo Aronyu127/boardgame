@@ -9,4 +9,5 @@
 #
 
 class Game < ApplicationRecord
+  has_many :game_room
 end

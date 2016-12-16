@@ -24,7 +24,7 @@ class User < ApplicationRecord
   include Redis::Objects
   store_accessor :data, :facebook_account, :facebook_id, :facebook_token, :facebook_avatar
   belongs_to :spy_game_role
-  has_many :game_room, dependent: :destroy
+  has_many :game_rooms, dependent: :destroy
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable
   devise :database_authenticatable, :registerable,

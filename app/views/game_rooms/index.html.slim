@@ -1,0 +1,16 @@
+table.table.table-bordered.table-striped.table-hover
+  thead
+    tr
+      th #
+      th 遊戲室名稱
+      th 人數
+      th 遊戲
+      th 房主
+  tbody
+    - @game_rooms.each do |g|
+      tr
+        td = g.id
+        td = g.name
+        td = g.limit_player
+        td = g.game.name
+        td = g.owner.name

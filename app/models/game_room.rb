@@ -14,6 +14,7 @@
 #
 
 class GameRoom < ApplicationRecord
-  has_many :user, as: :player
+  has_many :users, as: :player
   belongs_to :owner, class_name: :User
+  belongs_to :game
 end
