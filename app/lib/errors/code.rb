@@ -26,5 +26,4 @@ class Errors::Code
       I18n.t("errors.#{key}")
     end
   end
-
 end

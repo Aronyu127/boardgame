@@ -9,11 +9,10 @@ class UserAuthContext < BaseContext
   after_perform :update_github_full_access_token
   after_perform :user_confirm!
   # after_perform :update_github_data!
-  # after_perform :new_user_comming
 
   # params should be env["omniauth.auth"] in controller
   def initialize(params, current_user = nil)
-    @params = ActionController::Parameters.new(params).to_unsafe_h()
+    @params = ActionController::Parameters.new(params).to_unsafe_h
     @provider = @params[:provider]
     @user = current_user
     @authorization = nil
@@ -34,8 +33,7 @@ class UserAuthContext < BaseContext
 
   def responds
     { user: @user,
-      authorization: @authorization
-    }
+      authorization: @authorization }
   end
 
   def find_authorization
@@ -53,8 +51,8 @@ class UserAuthContext < BaseContext
 
   def email_uniqueness?
     scope = User.where(email: @email)
-    scope = scope.where("id != ?", @user.id)
-    return add_error(:omniauth_email_registered) unless scope.count == 0
+    scope = scope.where('id != ?', @user.id)
+    return add_error(:omniauth_email_registered) unless scope.count.zero?
   end
 
   def find_or_create_user
@@ -112,11 +110,6 @@ class UserAuthContext < BaseContext
   # end
 
   def update_github_full_access_token
-    @user.full_access_token = @authorization.auth_data["credentials"]["token"] if @provider.to_sym == :github
+    @user.full_access_token = @authorization.auth_data['credentials']['token'] if @provider.to_sym == :github
   end
-
-  # def new_user_comming
-  #   return unless @new_user_comming
-  #   SlackService.delay(retry: false).notify_admin("新使用者註冊! (##{@user.id})#{@user.name}<#{@user.email}>")
-  # end
 end

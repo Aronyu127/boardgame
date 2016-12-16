@@ -1,5 +1,4 @@
 module CrudConcern
-
   private
 
   def render_as_fail(action, error_messages = nil)

@@ -1,5 +1,4 @@
 class Api::AuthorizationController < Api::BaseController
-
   def log_in
     @user = user_signed_in? ? current_user : nil
     fb_data = User.get_fb_data(params[:access_token]) if params[:access_token]
@@ -14,5 +13,4 @@ class Api::AuthorizationController < Api::BaseController
 
   def log_out
   end
-
 end

@@ -5,7 +5,7 @@ gem 'aasm'
 gem 'pg'
 gem 'activerecord-postgis-adapter'
 gem 'redis'
-gem 'redis-objects', require: "redis/objects"
+gem 'redis-objects', require: 'redis/objects'
 
 # view rendering
 gem 'jbuilder', '~> 2.0'

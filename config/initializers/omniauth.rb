@@ -7,4 +7,4 @@ end
 
 ActiveRecord::Base.send(:include, ::Omniauthable)
 
-OmniAuth.config.path_prefix = "/authorizations"
+OmniAuth.config.path_prefix = '/authorizations'
