@@ -17,6 +17,7 @@ class GameRoomsController < BaseController
   def create
     game_room.owner = current_user
     if game_room.save
+      current_user.update_attributes(current_room: game_room)
       redirect_as_success(game_room_path(game_room), '遊戲室已建立')
     else
       render_as_fail(:new, game_room.errors.full_messages)
@@ -29,6 +30,14 @@ class GameRoomsController < BaseController
       redirect_as_success(game_room_path(game_room), '遊戲室已更改')
     else
       render_as_fail(:edit, game_room.errors.full_messages)
+    end
+  end
+
+  def destroy
+    if @game_room.destroy
+      redirect_as_success(game_rooms_path, '遊戲室已關閉')
+    else
+      render_as_fail(:show, game_room.errors.full_messages)
     end
   end
 

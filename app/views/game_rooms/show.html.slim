@@ -15,3 +15,5 @@ table.table.table-bordered.table-striped.table-hover
 = link_to '更改遊戲室設定', edit_game_room_path(@game_room)
 | &nbsp;
 = link_to '回到首頁', root_path
+| &nbsp;
+= link_to '關閉遊戲室', game_room_path(@game_room), method: :delete, 'data-confirm': "你確定要關閉#{@game_room.name}遊戲室嗎？"
