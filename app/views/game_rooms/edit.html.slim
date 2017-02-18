@@ -1,3 +1,3 @@
-div 更改遊戲室
-= simple_form_for @game_room, url: game_rooms_path, method: :put do |f|
+h3 更改遊戲室
+= simple_form_for @game_room, url: game_room_path(@game_room), method: :put do |f|
     = render partial: 'form', object: f, as: :f

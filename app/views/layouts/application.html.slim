@@ -10,4 +10,5 @@ html
       = render partial: "layouts/header"
       .page-wrapper
         = render partial: "layouts/flash_message"
-        = yield
+        .content.container
+          = yield
