@@ -14,7 +14,9 @@
 #
 
 class GameRoom < ApplicationRecord
-  has_many :users, as: :player
+  has_many :users
   belongs_to :owner, class_name: :User
   belongs_to :game
+  validates :game, presence: true
+  validates :owner, uniqueness: true, presence: true
 end

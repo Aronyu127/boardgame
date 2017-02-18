@@ -8,6 +8,7 @@ gem 'redis'
 gem 'redis-objects', require: 'redis/objects'
 
 # view rendering
+gem 'rails-i18n'
 gem 'jbuilder', '~> 2.0'
 gem 'slim'
 gem 'simple_form'

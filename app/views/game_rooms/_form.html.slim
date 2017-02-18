@@ -1,0 +1,8 @@
+= f.input :name
+= f.select :game_id, collect_for_games 
+= f.select :limit_player, collect_for_limit_player
+
+.form-actions
+  = f.submit "送出"
+  = " "
+  = link_to '回到首頁', root_path

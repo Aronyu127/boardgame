@@ -1,6 +1,33 @@
-- if user_signed_in?
-  ul.nav.navbar-nav.navbar-right
-        li= link_to "登出", destroy_user_session_path, method: :delete, class: "glyphicon glyphicon-off"
-- else
-  ul.nav.navbar-nav.nvabar-right
-    li= link_to "Facebook 登入", auth_facebook_path
+nav.navbar.navbar-default
+  .container-fluid
+    /! Brand and toggle get grouped for better mobile display
+    .navbar-header
+      button.navbar-toggle.collapsed aria-expanded="false" data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button" 
+        span.sr-only Toggle navigation
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+      = link_to '面對面玩桌遊', root_path, class: 'navbar-brand'
+    /! Collect the nav links, forms, and other content for toggling
+    #bs-example-navbar-collapse-1.collapse.navbar-collapse
+      ul.nav.navbar-nav
+        li.active
+          = link_to '創建新遊戲', new_game_room_path
+      
+      ul.nav.navbar-nav.navbar-right
+        - if user_signed_in?
+          li.dropdown
+            a.dropdown-toggle aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#" role="button" 
+              | 設定
+              span.caret
+            ul.dropdown-menu
+              li
+                a href="#"  Action
+              li
+                a href="#"  Another action
+              li
+                a href="#"  Something else here
+        - if user_signed_in?
+            li= link_to "登出", destroy_user_session_path, method: :delete
+        - else
+            li= link_to "Facebook 登入", auth_facebook_path

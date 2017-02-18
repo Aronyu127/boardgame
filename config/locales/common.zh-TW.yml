@@ -1,0 +1,12 @@
+zh-TW:
+  activerecord:
+    models:
+      game: '遊戲'
+      game_room: '遊戲室'
+      user: '使用者'
+    attributes:
+      game_room:
+        name: '房名'
+        status: '狀態'
+        limit_player: '限制人數'
+        owner: '房主'

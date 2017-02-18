@@ -1,0 +1,17 @@
+table.table.table-bordered.table-striped.table-hover
+  tbody
+    tr
+      td 遊戲室名稱
+      td = @game_room.name
+    tr
+      td 遊戲名稱
+      td = @game_room.game.name
+    tr
+      td 遊戲人數
+      td = @game_room.limit_player
+    tr
+      td 房主
+      td = @game_room.owner.name
+= link_to '更改遊戲室設定', edit_game_room_path(@game_room)
+| &nbsp;
+= link_to '回到首頁', root_path

@@ -6,6 +6,7 @@ table.table.table-bordered.table-striped.table-hover
       th 人數
       th 遊戲
       th 房主
+      th
   tbody
     - @game_rooms.each do |g|
       tr
@@ -14,3 +15,6 @@ table.table.table-bordered.table-striped.table-hover
         td = g.limit_player
         td = g.game.name
         td = g.owner.name
+        td
+           = link_to '查看', game_room_path(g.id), class: 'btn btn-mini'
+           | &nbsp;
