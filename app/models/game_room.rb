@@ -14,9 +14,28 @@
 #
 
 class GameRoom < ApplicationRecord
+  include AASM
   has_many :users
   belongs_to :owner, class_name: :User
   belongs_to :game
-  validates :game, presence: true
+  validates :game, :name, presence: true
   validates :owner, uniqueness: true, presence: true
+  enum status: {
+    waiting: 1,
+    processing: 2,
+    ending: 3
+  }
+
+  aasm column: :status, enum: true do
+    state :waiting, initial: true
+    state :processing, :ending
+
+    event :play do
+      transitions from: :waiting, to: :processing
+    end
+
+    event :close do
+      transitions from: :processing, to: :ending
+    end
+  end
 end

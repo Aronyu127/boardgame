@@ -8,5 +8,9 @@ zh-TW:
       game_room:
         name: '房名'
         status: '狀態'
+        statuses:
+          waiting: '等待中'
+          processing: '遊戲進行中'
+          ending: '已結束'
         limit_player: '限制人數'
         owner: '房主'

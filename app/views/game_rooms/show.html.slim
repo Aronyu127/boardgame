@@ -12,6 +12,9 @@ table.table.table-bordered.table-striped.table-hover
     tr
       td 房主
       td = @game_room.owner.name
+    tr
+      td 狀態
+      td = enum_l(@game_room, :status)
 = link_to '更改遊戲室設定', edit_game_room_path(@game_room), class: 'btn btn-default'
 | &nbsp;
 = link_to '回到首頁', root_path, class: 'btn btn-default'
