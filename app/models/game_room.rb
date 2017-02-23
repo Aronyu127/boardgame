@@ -16,6 +16,7 @@
 class GameRoom < ApplicationRecord
   include AASM
   has_many :users
+  has_many :messages, dependent: :destroy
   belongs_to :owner, class_name: :User
   belongs_to :game
   validates :game, :name, presence: true

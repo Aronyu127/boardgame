@@ -19,4 +19,14 @@ table.table.table-bordered.table-striped.table-hover
 | &nbsp;
 = link_to '回到首頁', root_path, class: 'btn btn-default'
 | &nbsp;
-= link_to '關閉遊戲室', game_room_path(@game_room), method: :delete, 'data-confirm': "你確定要關閉#{@game_room.name}遊戲室嗎？", class: 'btn btn-danger'
+= link_to '關閉遊戲室', game_room_path(@game_room), method: :delete, 'data-confirm': "你確定要關閉#{@game_room.name}遊戲室嗎？", class: 'btn btn-danger' if @game_room.owner == current_user
+
+p
+div class="panel panel-default"
+  - if @game_room.messages.any?
+    div class="panel-body" id="messages" data-gameRoomId=@game_room.id
+    
+      = render partial: 'messages/message', collection: @game_room.messages
+  - else
+    div class="panel-body hidden" id="messages" data-gameRoomId=@game_room.id
+= render partial: 'messages/message_form', locals: {message: @message, chatroom: @game_room}

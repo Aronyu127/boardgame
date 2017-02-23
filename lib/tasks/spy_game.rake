@@ -8,14 +8,6 @@ namespace :spy_game do
     SpyGameRole.create([place: '飛機', name: '副駕駛'])
     SpyGameRole.create([place: '飛機', name: '機長'])
 
-    SpyGameRole.create([place: '主題樂園', name: '頭等艙乘客'])
-    SpyGameRole.create([place: '主題樂園', name: '頭等艙乘客'])
-    SpyGameRole.create([place: '主題樂園', name: '頭等艙乘客'])
-    SpyGameRole.create([place: '主題樂園', name: '頭等艙乘客'])
-    SpyGameRole.create([place: '主題樂園', name: '頭等艙乘客'])
-    SpyGameRole.create([place: '主題樂園', name: '頭等艙乘客'])
-    SpyGameRole.create([place: '主題樂園', name: '頭等艙乘客'])
-
     SpyGameRole.create([place: '銀行', name: '武裝車駕駛'])
     SpyGameRole.create([place: '銀行', name: '經理'])
     SpyGameRole.create([place: '銀行', name: '顧問'])

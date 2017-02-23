@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   devise_for :users
-  # You can have the root of your site routed with "root"
   root 'game_rooms#index'
 
   get '/authorizations/:provider/callback', to: 'authorizations#callback'
@@ -9,7 +8,13 @@ Rails.application.routes.draw do
     get "/authorizations/#{provider}", as: "auth_#{provider}"
   end
 
-  resources :game_rooms
+  resources :game_rooms do
+    member do
+      post :start_game
+      post :enter_game
+      get  :during_game
+    end
+  end
 
   namespace :api, defaults: { format: 'json' } do
     post '/login' => 'authorization#login'

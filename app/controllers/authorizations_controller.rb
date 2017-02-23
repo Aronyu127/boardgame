@@ -4,6 +4,7 @@ class AuthorizationsController < ApplicationController
     context = UserAuthContext.new(env['omniauth.auth'], user)
     if result = context.perform
       sign_in(result[:user])
+      cookies.signed[:user_id] = current_user.id
       redirect_to params[:origin] || root_path(host: Setting.host), flash: { success: '成功登入了。' }
     else
       redirect_to root_path(host: Setting.host), flash: { error: 'oauth sign in fail' }

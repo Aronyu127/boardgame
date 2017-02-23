@@ -26,6 +26,7 @@ class User < ApplicationRecord
   belongs_to :spy_game_role
   belongs_to :current_room, class_name: 'GameRoom', foreign_key: :game_room_id
   has_one :own_room, class_name: 'GameRoom', foreign_key: :owner_id, dependent: :destroy
+  has_many :messages
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable
   devise :database_authenticatable, :registerable,
