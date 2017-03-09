@@ -60,6 +60,7 @@ group :development, :test do
   gem 'rspec'
   gem 'rspec-rails'
   gem 'rubocop', require: false
+  gem 'xray-rails'
 end
 
 group :development do

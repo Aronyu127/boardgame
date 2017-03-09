@@ -18,6 +18,9 @@
 #  spy_game_role_id       :integer
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  name                   :string
+#  avatar                 :string
+#  data                   :hstore
 #
 
 class User < ApplicationRecord

@@ -22,11 +22,44 @@ table.table.table-bordered.table-striped.table-hover
 = link_to '關閉遊戲室', game_room_path(@game_room), method: :delete, 'data-confirm': "你確定要關閉#{@game_room.name}遊戲室嗎？", class: 'btn btn-danger' if @game_room.owner == current_user
 
 p
-div class="panel panel-default"
+div.panel.panel-default id= @game_room.id
   - if @game_room.messages.any?
     div class="panel-body" id="messages" data-gameRoomId=@game_room.id
     
       = render partial: 'messages/message', collection: @game_room.messages
   - else
     div class="panel-body hidden" id="messages" data-gameRoomId=@game_room.id
-= render partial: 'messages/message_form', locals: {message: @message, chatroom: @game_room}
+= render partial: 'messages/message_form', locals: { message: @message, chatroom: @game_room}
+
+javascript:
+  $(document).on('turbolinks:load', function() {
+    submitNewMessage();
+  });
+  var RoomId = $('.panel-default').attr('id');
+  (function(id) {
+    App['room' + id] = App.cable.subscriptions.create({channel: 'SpyGameRoomChannel', room: id}, {  
+      received: function(data) {
+        $("[data-gameRoomId='" + this.gameRoomId + "']").removeClass('hidden')
+        return $("[data-gameRoomId='" + this.gameRoomId + "']").append(data.message);
+      },
+
+      setGameroomId: function(gameRoomId) {
+        this.gameRoomId = gameRoomId
+      }
+    });
+  })(RoomId);
+  if (App.cable.subscriptions['subscriptions'].length > 1) {
+      App.cable.subscriptions.remove(App.cable.subscriptions['subscriptions'][0])
+  };
+
+  function submitNewMessage(){  
+    $('textarea#message_content').keydown(function(event) {
+      if (event.keyCode == 13 && event.target.value.match(/[^\s]/)) {
+        var msg = event.target.value
+        App['room' + RoomId].setGameroomId(RoomId)
+        App['room' + RoomId].send({message: msg})
+        $('[data-textarea="message"]').val("")
+        return false;
+      }
+    });
+  }

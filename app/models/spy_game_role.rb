@@ -4,7 +4,7 @@
 #
 #  id    :integer          not null, primary key
 #  name  :string
-#  place :integer
+#  place :string
 #
 
 class SpyGameRole < ApplicationRecord
