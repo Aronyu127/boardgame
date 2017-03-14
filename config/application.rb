@@ -27,6 +27,7 @@ module Boardgame
     config.i18n.default_locale = 'zh-TW'
     config.autoload_paths += %W(#{config.root}/app)
     config.autoload_paths << "#{Rails.root}/jobs"
+    config.action_cable.allowed_request_origins = ['http://aron.club', 'http://52.77.237.156']
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
   end
