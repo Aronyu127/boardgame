@@ -19,6 +19,7 @@ gem 'coffee-rails', '~> 4.1.0'
 
 # api
 gem 'httparty'
+gem 'mechanize'
 
 gem 'devise'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
