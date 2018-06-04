@@ -12,7 +12,8 @@ Rails.application.routes.draw do
     member do
       post :start_game
       post :enter_game
-      get  :during_game
+      delete :leave_game
+      get :during_game
     end
   end
 

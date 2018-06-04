@@ -8,18 +8,23 @@ table.table.table-bordered.table-striped.table-hover
       td = '一夜狼人'
     tr
       td 遊戲人數
-      td = @game_room.limit_player
+      td = "#{@game_room.game_users.count} / #{@game_room.limit_player}"
     tr
       td 房主
       td = @game_room.owner.name
     tr
       td 狀態
       td = enum_l(@game_room, :status)
-= link_to '更改遊戲室設定', edit_game_room_path(@game_room), class: 'btn btn-default'
-| &nbsp;
+- if @game_room.owner == current_user
+  = link_to '更改遊戲室設定', edit_game_room_path(@game_room), class: 'btn btn-default'
+  | &nbsp;
+  = link_to '關閉遊戲室', game_room_path(@game_room), method: :delete, 'data-confirm': "你確定要關閉#{@game_room.name}遊戲室嗎？", class: 'btn btn-danger' 
+  | &nbsp;
+- if @game_room.user_exist?(current_user) && @game_room.owner != current_user
+  = link_to '退出遊戲室', leave_game_game_room_path(@game_room), method: :delete, 'data-confirm': "你確定要退出#{@game_room.name}遊戲室嗎？", class: 'btn btn-danger', method: :delete 
+
 = link_to '回到首頁', root_path, class: 'btn btn-default'
-| &nbsp;
-= link_to '關閉遊戲室', game_room_path(@game_room), method: :delete, 'data-confirm': "你確定要關閉#{@game_room.name}遊戲室嗎？", class: 'btn btn-danger' if @game_room.owner == current_user
+
 
 p
 div.panel.panel-default id= @game_room.id

@@ -17,4 +17,8 @@
 class Wolf::GameRoom < GameRoom
   has_many :game_users, class_name: 'Wolf::GameRoomUser', dependent: :destroy
   validates :owner_id, presence: true, uniqueness: true
+
+  def user_exist?(user)
+    game_users.where(user_id: user.id).any?
+  end
 end

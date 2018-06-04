@@ -13,10 +13,13 @@ table.table.table-bordered.table-striped.table-hover
       tr
         td = g.id
         td = g.name
-        td = g.limit_player
+        td = "#{g.game_users.count} / #{g.limit_player}"
         th = '一夜狼人'
         td = g.owner.name
         td = enum_l(g, :status)
         td
-           = link_to '查看', game_room_path(g.id), class: 'btn btn-mini'
+           = link_to '查看', game_room_path(g.id), class: 'btn btn-default'
            | &nbsp;
+           - unless user_signed_in? && current_user.current_room
+            = link_to '加入房間', enter_game_game_room_path(g.id), class: 'btn btn-primary', method: :post
+
