@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170223064608) do
+ActiveRecord::Schema.define(version: 20180604025950) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20170223064608) do
 
   create_table "game_rooms", force: :cascade do |t|
     t.string   "name"
+    t.string   "type"
     t.integer  "owner_id"
     t.integer  "game_id"
     t.integer  "status"
@@ -42,12 +43,6 @@ ActiveRecord::Schema.define(version: 20170223064608) do
     t.datetime "updated_at",   null: false
     t.index ["game_id"], name: "index_game_rooms_on_game_id", using: :btree
     t.index ["owner_id"], name: "index_game_rooms_on_owner_id", using: :btree
-  end
-
-  create_table "games", force: :cascade do |t|
-    t.string "name"
-    t.string "type"
-    t.hstore "data"
   end
 
   create_table "messages", force: :cascade do |t|
@@ -74,17 +69,32 @@ ActiveRecord::Schema.define(version: 20170223064608) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.boolean  "admin",                  default: false
-    t.integer  "game_room_id"
-    t.integer  "spy_game_role_id"
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
     t.string   "name"
     t.string   "avatar"
     t.hstore   "data"
+    t.boolean  "admin",                  default: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
-    t.index ["spy_game_role_id"], name: "index_users_on_spy_game_role_id", using: :btree
+  end
+
+  create_table "wolf_game_room_users", force: :cascade do |t|
+    t.integer  "game_room_id"
+    t.integer  "user_id"
+    t.integer  "initial_role_id"
+    t.integer  "finial_role_id"
+    t.hstore   "revealing_data"
+    t.integer  "status"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  create_table "wolf_roles", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "order"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

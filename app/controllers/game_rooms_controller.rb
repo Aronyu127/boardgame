@@ -19,7 +19,7 @@ class GameRoomsController < BaseController
   def create
     game_room.owner = current_user
     if game_room.save
-      current_user.update_attributes(current_room: game_room)
+      Wolf::GameRoomUser.create(game_room_id: game_room.id, user_id: current_user.id)
       redirect_as_success(game_room_path(game_room), '遊戲室已建立')
     else
       render_as_fail(:new, game_room.errors.full_messages)
@@ -36,7 +36,7 @@ class GameRoomsController < BaseController
   end
 
   def destroy
-    if game_room.destroy
+    if current_user.current_room.destroy
       redirect_as_success(game_rooms_path, '遊戲室已關閉')
     else
       render_as_fail(:show, game_room.errors.full_messages)
@@ -47,11 +47,11 @@ class GameRoomsController < BaseController
   end
 
   def enter_game
-    current_user.current_room = game_room
-    if current_user.save
+    if game_room.status == 'waiting'
+      Wolf::GameRoomUser.find_or_create_by(game_room_id: game_room.id, user_id: current_user.id)
       redirect_as_success(during_game_game_room_path(game_room), "成功進入遊戲室-#{game_room.name}")
     else
-      render_as_fail(:back, game_room.errors.full_messages)
+      render_as_fail(:back, '無法加入已開始的遊戲')
     end
   end
 
@@ -74,7 +74,7 @@ class GameRoomsController < BaseController
   end
 
   def game_room_params
-    params.fetch(:game_room, {}).permit(:name, :owner_id, :game_id, :limit_player)
+    params.fetch(:game_room, {}).permit(:name, :owner_id, :limit_player, :type)
   end
 
   def check_owner

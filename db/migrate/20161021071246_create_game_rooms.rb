@@ -3,6 +3,7 @@ class CreateGameRooms < ActiveRecord::Migration[5.0]
     enable_extension 'hstore'
     create_table :game_rooms do |t|
       t.string :name
+      t.string :type
       t.integer :owner_id
       t.integer :game_id
       t.integer :status

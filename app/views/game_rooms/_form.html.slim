@@ -1,5 +1,5 @@
 = f.input :name
-= f.association :game, label_method: :name, value_method: :id
+= f.input :type, collection: collect_for_games
 = f.input :limit_player, collection: collect_for_limit_player
 
 .form-actions

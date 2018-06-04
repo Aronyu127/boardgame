@@ -14,8 +14,7 @@
 #  updated_at   :datetime         not null
 #
 
-require 'rails_helper'
-
-RSpec.describe GameRoom, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+class Wolf::GameRoom < GameRoom
+  has_many :game_users, class_name: 'Wolf::GameRoomUser', dependent: :destroy
+  validates :owner_id, presence: true, uniqueness: true
 end

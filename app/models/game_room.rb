@@ -4,6 +4,7 @@
 #
 #  id           :integer          not null, primary key
 #  name         :string
+#  type         :string
 #  owner_id     :integer
 #  game_id      :integer
 #  status       :integer
@@ -18,8 +19,6 @@ class GameRoom < ApplicationRecord
   has_many :users
   has_many :messages, dependent: :destroy
   belongs_to :owner, class_name: :User
-  belongs_to :game
-  validates :game, :name, presence: true
   validates :owner, uniqueness: true, presence: true
   enum status: {
     waiting: 1,

@@ -13,21 +13,20 @@
 #  last_sign_in_at        :datetime
 #  current_sign_in_ip     :string
 #  last_sign_in_ip        :string
-#  admin                  :boolean          default(FALSE)
-#  game_room_id           :integer
-#  spy_game_role_id       :integer
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
 #  name                   :string
 #  avatar                 :string
 #  data                   :hstore
+#  admin                  :boolean          default(FALSE)
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
 #
 
 class User < ApplicationRecord
   include Redis::Objects
   store_accessor :data, :facebook_account, :facebook_id, :facebook_token, :facebook_avatar
   belongs_to :spy_game_role
-  belongs_to :current_room, class_name: 'GameRoom', foreign_key: :game_room_id
+  has_one :current_room, through: :wolf_game_user, source: :game_room, dependent: :destroy
+  has_one :wolf_game_user, class_name: 'Wolf::GameRoomUser', dependent: :destroy
   has_one :own_room, class_name: 'GameRoom', foreign_key: :owner_id, dependent: :destroy
   has_many :messages
   # Include default devise modules. Others available are:
