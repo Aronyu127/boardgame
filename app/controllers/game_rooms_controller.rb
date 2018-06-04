@@ -3,6 +3,7 @@ class GameRoomsController < BaseController
   before_action :game_room
   before_action :check_owner, only: [:start_game, :destroy, :update]
   before_action :check_game_room_waiting, only: [:enter_game, :leave_game]
+  before_action :check_not_in_room, only: [:create, :enter_game]
 
   def index
     @game_rooms = GameRoom.all
@@ -88,6 +89,10 @@ class GameRoomsController < BaseController
 
   def check_owner
     redirect_as_fail(game_room_path(@game_room), '房主才可進行此操作') unless @game_room.owner == current_user
+  end
+
+  def check_not_in_room
+    redirect_as_fail(game_rooms_path, '你已經參加了其他遊戲室') if Wolf::GameRoomUser.find_by(user_id: current_user.id)
   end
 
   def check_game_room_waiting

@@ -10,7 +10,7 @@ module ApplicationCable
     protected
 
     def find_verified_user
-      current_user = User.find_by(id: cookies.signed[:user_id])
+      current_user = env['warden'].user
       if current_user && current_user.current_room
         current_user
       else
