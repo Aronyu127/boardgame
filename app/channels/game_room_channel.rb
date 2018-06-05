@@ -1,5 +1,5 @@
 # Be sure to restart your server when you modify this file. Action Cable runs in a loop that does not support auto reloading.
-class SpyGameRoomChannel < ApplicationCable::Channel
+class GameRoomChannel < ApplicationCable::Channel
   def subscribed
     stream_from "room-#{params['room']}:messages"
   end

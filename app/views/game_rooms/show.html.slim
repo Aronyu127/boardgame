@@ -25,7 +25,12 @@ table.table.table-bordered.table-striped.table-hover
 
 = link_to '回到首頁', root_path, class: 'btn btn-default'
 
-
+- if @game_room.owner == current_user
+  = simple_form_for :game_setting, url: start_game_game_room_path(@game_room), method: :post do |f|
+    = f.collection_check_boxes :role_ids, Wolf::Role.all, :id, :name
+    .form-actions
+      = f.submit "開始遊戲", class: 'btn btn-primary'
+    
 p
 div.panel.panel-default id= @game_room.id
   - if @game_room.messages.any?
@@ -42,8 +47,11 @@ javascript:
   });
   var RoomId = $('.panel-default').attr('id');
   (function(id) {
-    App['room' + id] = App.cable.subscriptions.create({channel: 'SpyGameRoomChannel', room: id}, {  
+    App['room' + id] = App.cable.subscriptions.create({channel: 'GameRoomChannel', room: id}, {  
       received: function(data) {
+        if(data.message == '開始遊戲'){
+          return window.location.href = '/game_rooms/' + id + '/during_game';  
+        };
         $("[data-gameRoomId='" + this.gameRoomId + "']").removeClass('hidden')
         return $("[data-gameRoomId='" + this.gameRoomId + "']").append(data.message);
       },

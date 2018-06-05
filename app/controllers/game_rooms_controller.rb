@@ -66,14 +66,12 @@ class GameRoomsController < BaseController
   end
 
   def start_game
-    game_room.play
-    if game_room.save
-      ActionCable.server.broadcast("spy_game_channel_#{game_room.id}",
-                                   message: '開始遊戲',
-                                   user: @game_room.owner.name)
+    context = InitWolfGameContext.new(game_room, params[:game_setting][:role_ids])
+    if context.perform
+      ActionCable.server.broadcast "room-#{game_room.id}:messages", message: '開始遊戲'
       redirect_as_success(during_game_game_room_path(game_room), '遊戲開始')
     else
-      render_as_fail(:show, game_room.errors.full_messages)
+      render_as_fail(:show, context.error_messages.join(', '))
     end
   end
 

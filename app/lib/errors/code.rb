@@ -10,7 +10,7 @@ class Errors::Code
     validates_fail: 400,
     data_create_fail: 400,
     data_update_fail: 400,
-    data_delete_fail: 400
+    setting_error: 400
   }.freeze
 
   class << self

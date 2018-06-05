@@ -14,9 +14,12 @@
 #
 
 class Wolf::GameRoomUser < ApplicationRecord
+  NEED_WAIT_ROLES = Wolf::Role.where.not(order: nil).pluck(:id)
   include AASM
   belongs_to :user
   belongs_to :game_room
+  has_one :role, class_name: 'Wolf::Role'
+  has_one :finial_role, class_name: 'Wolf::Role'
   validates :user, uniqueness: { scope: :game_room }
 
   enum status: {
@@ -29,5 +32,23 @@ class Wolf::GameRoomUser < ApplicationRecord
   aasm column: :status, enum: true do
     state :initial, initial: true
     state :waiting, :ready, :done
+
+    event :to_waiting do
+      transitions from: :initial, to: :waiting
+    end
+
+    event :to_ready do
+      transitions from: [:waiting, :initial], to: :ready
+    end
+  end
+
+  def set_character(role_id)
+    update(initial_role_id: role_id)
+    case role_id
+    when NEED_WAIT_ROLES.include?(role_id)
+      to_waiting!
+    else
+      to_ready!
+    end
   end
 end
