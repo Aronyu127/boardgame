@@ -14,8 +14,11 @@
 #  updated_at   :datetime         not null
 #
 
-require 'rails_helper'
+class Wolf::GameRoom < GameRoom
+  has_many :game_users, class_name: 'Wolf::GameRoomUser', dependent: :destroy
+  store_accessor :data, :table_cards
 
-RSpec.describe GameRoom, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  def user_exist?(user)
+    game_users.where(user_id: user.id).any?
+  end
 end

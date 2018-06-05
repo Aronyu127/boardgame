@@ -1,6 +1,10 @@
 module ApplicationHelper
   def collect_for_games
-    Game.all.map { |c| [c.name, c.id] }
+    [['一夜狼人', 'Wolf::GameRoom']]
+  end
+
+  def collect_for_wolf_roles
+    Wolf::Role.all.map { |a| [a.id, a.name] }
   end
 
   def collect_for_limit_player
